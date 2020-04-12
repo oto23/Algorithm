@@ -9,6 +9,8 @@
     <script src="dist/locale/bootstrap-table-en-US.js"></script>
     <script src="dist/main.js"></script>
 <style>
+
+
     li   {
         color: black;
         float: left;
@@ -20,43 +22,65 @@
     }
 
 
-
-    .pageButton{
-        padding: 10px 16px;
-        background-color: whitesmoke;
-
-
-    }
-
-.pageButtonActive{
-    background-color: #1CAF9A; !important;
-    color: white;
-    border: 1px solid #1CAF9A;
-    border-radius: 3px;
-
-
-
+    #myInput {
+        /*background-image: url('/css/searchicon.png');*/
+        /*background-position: 10px 10px;*/
+        /*background-repeat: no-repeat;*/
+        width:90%;
+        font-size: 16px;
+        padding: 12px 20px 12px 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
 }
+
+
+
+
+    /*.pageButton{*/
+        /*padding: 10px 16px;*/
+        /*background-color: whitesmoke;*/
+
+
+    /*}*/
+
+/*.pageButtonActive{*/
+    /*background-color: #1CAF9A; !important;*/
+    /*color: white;*/
+    /*border: 1px solid #1CAF9A;*/
+    /*border-radius: 3px;*/
+
+
+
+/*}*/
 
 
     #myTable thead{
-        background-color: #1CAF9A;
+        background-color: #14a1af;
 
     }
 
-    .btn-filter{
-        font-size: 16px;
-        border-radius: 6px;
-        padding: 10px 20px;
-        background-color: white;
-        color: black;
-        border: 2px solid #555555;
+    #myTable  {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+
+
+    }
+
+    /*.btn-filter{*/
+        /*font-size: 16px;*/
+        /*border-radius: 6px;*/
+        /*padding: 10px 20px;*/
+        /*background-color: white;*/
+        /*color: black;*/
+        /*border: 2px solid #555555;*/
 
 
 
 
 
-}
+/*}*/
 
 
 
@@ -72,9 +96,9 @@
 
 <body>
 
-
+<input type="text" id="myInput" onkeyup="searchFunc()" placeholder="Search For Company..">
 <div class="panel panel-primary filterable">
-    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+    <!--<button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>-->
 
     <table id="table">
 

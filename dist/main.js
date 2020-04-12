@@ -1,17 +1,61 @@
 var tableObject = null;
 var filterData = {
-    actor: "",
-    fond: "",
-    item: "",
-    repository: "",
-    username: "",
-    serie: "",
-    dateStart: 0,
-    dateEnd: 0,
-    page: 0,
-    size: 10,
+    company: "",
+    MDI: "",
+    NQE: 1,
+    BFI: 1,
+
 
 };
+var dataTest =[
+    {
+        company: "Example",
+        MDI: "Example",
+        NQE: 1,
+        BFI: 1,
+    },
+    {
+        company: "Example 2",
+        MDI: "Example 2",
+        NQE: 2,
+        BFI: 2,
+    },
+
+    {
+        company: "Example 3",
+        MDI: "Example 3",
+        NQE: 3,
+        BFI: 3,
+    },
+
+    {
+        company: "Example 4",
+        MDI: "Example 4",
+        NQE: 4,
+        BFI: 4,
+    },
+    {
+        company: "Example 5",
+        MDI: "Example 5",
+        NQE: 5,
+        BFI: 5,
+    },
+
+    {
+        company: "Example 6",
+        MDI: "Example 6",
+        NQE: 6,
+        BFI: 6,
+    },
+    {
+        company: "Example 7",
+        MDI: "Example 7",
+        NQE: 7,
+        BFI: 7,
+    },
+
+
+    ]
 
 
 $(document).ready(function () {
@@ -22,137 +66,106 @@ $(document).ready(function () {
 
 
 
-
-    function pagesToDisplay() {
-        var pages = filterData.page
-
-
-        for (let i = 1; i <= pages + 1; i++) {
-            console.log(i)
-
-
-        }
-
-
-    }
-
-
-    $('.filterable .btn-filter').click(function () {
+    //
+    // function pagesToDisplay() {
+    //     var pages = filterData.page
+    //
+    //
+    //     for (let i = 1; i <= pages + 1; i++) {
+    //         console.log(i)
+    //
+    //
+    //     }
+    //
+    //
+    // }
 
 
-        $("th[data-field='actor']").find("div").first().html("<input id='actor' placeholder='Actor' type='text'/>");
-
-        $("th[data-field='fond']").find("div").first().html("<input id='fond' placeholder='Fond' type='text' />");
-
-        $("th[data-field='item']").find("div").first().html("<input id='item' placeholder='Item' type='text' />");
-
-        $("th[data-field='repository']").find("div").first().html("<input id='repository' placeholder='Repository' type='text' />");
-        $("th[data-field='username']").find("div").first().html("<input id='username' placeholder='Username' type='text' />");
-        $("th[data-field='serie']").find("div").first().html("<input id='serie' placeholder='Serie' type='text' />");
-        $("th[data-field='dateCreated']").find("div").first().html("<input id='dateStart' autocomplete='' type='date' > <input id='dateEnd' type='date'>");
-        $("input").on("change", function () {
-            filterData.page = 0;
-            var value = $(this).val()
-            var key = $(this).attr("id")
-            if (key === "dateStart" || key === "dateEnd") {
-                var newValue = new Date(value).getTime()
-                if (isNaN(newValue)){
-                    filterData[key] = 0;
-                    getData()
-
-                } else{
-                    filterData[key] = newValue;
-                    getData()
-                }
-            } else {
-                filterData[key] = value;
-
-                getData()
-
-
-
-            }
-
-
-        });
-
-
-    });
 
 
     tableObject = $('#myTable').bootstrapTable({
 
         columns: [{
-            field: 'actor',
-            title: 'Actor'
+            field: 'company',
+            title: 'Company Name'
+        },   {
+            field: 'MDI',
+            title: 'Monetary Detracting Investments(MDI)'
         }, {
-            field: 'dateCreated',
-            title: 'Date Created'
+            field: 'NQE',
+            title: 'Non-Quantitative Easing(NQE) '
         }, {
-            field: 'dateUpdated',
-            title: 'Date Updated'
-        }, {
-            field: 'fond',
-            title: 'Fond'
-        }, {
-            field: 'id',
-            title: 'Item ID'
-        }, {
-            field: 'index',
-            title: 'Index'
-        }, {
-            field: 'item',
-            title: 'Item '
-        }, {
-            field: 'repository',
-            title: 'Repository'
-        }, {
-            field: 'serie',
-            title: 'Serie'
-        }, {
-            field: 'status',
-            title: 'Status'
-        }, {
-            field: 'username',
-            title: 'Username'
-        },],
-        data: [],
+            field: 'BFI',
+            title: 'Behavioral Financial Interactions(BFI)'
+        }],
+        data: dataTest,
+
+
 
 
     });
-    getData()
+    // getData()
 
 });
 
-function loadData(page) {
+// function loadData(page) {
+//
+//     filterData.page = page;
+//     getData()
+//
+//
+// }
 
-    filterData.page = page;
-    getData()
+function searchFunc(){
 
-
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0]
+    ;
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
 }
 
-function getData() {
-    $.getJSON("http://188.166.19.101:8282/scan-report/search", filterData, function (result) {
-        $('#myTable').bootstrapTable('load', result.content);
-        var totalPages = result.totalPages;
-        var pagesToDisplay = [];
-        var page = filterData.page;
 
 
-        for (let i = 0; i < totalPages; i++) {
-            pagesToDisplay.push(i)
-        }
+// function getData() {
+//       for (let i = 0; i<= length(dataTest); i++){
+//
+//
+//
+//     }
 
-
-        document.getElementById('pages').innerHTML = "";
-        for (var pag in pagesToDisplay) {
-            var page2 = parseInt(pag) + 1;
-            console.log("test: ", page, parseInt(pag));
-            console.log(page + 1 === parseInt(pag));
-            document.getElementById('pages').innerHTML += '<li><button class="pageButton ' + (page === parseInt(pag) ? 'pageButtonActive' : '') + '" onclick="loadData(' + (pag) + ')">' + page2 + '</button</li>'
-
-
-        }
-    })
-}
+//     $.getJSON("", filterData, function (result) {
+//         $('#myTable').bootstrapTable('load', result.content);
+//         var totalPages = result.totalPages;
+//         var pagesToDisplay = [];
+//         var page = filterData.page;
+//
+//
+//         for (let i = 0; i < totalPages; i++) {
+//             pagesToDisplay.push(i)
+//         }
+//
+//
+//         document.getElementById('pages').innerHTML = "";
+//         for (var pag in pagesToDisplay) {
+//             var page2 = parseInt(pag) + 1;
+//             console.log("test: ", page, parseInt(pag));
+//             console.log(page + 1 === parseInt(pag));
+//             document.getElementById('pages').innerHTML += '<li><button class="pageButton ' + (page === parseInt(pag) ? 'pageButtonActive' : '') + '" onclick="loadData(' + (pag) + ')">' + page2 + '</button</li>'
+//
+//
+//         }
+//     })
+// }
